@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ensowt.smartmarket.gen.db.City;
 import com.ensowt.smartmarket.gen.db.Market;
@@ -24,7 +26,9 @@ public class OfferSearchController {
 	private static final Logger logger = Logger
 			.getLogger(OfferSearchController.class);
 
-	public void getOffers(
+	@RequestMapping(value = "/getOffersByCityMarket", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Offer> getOffers(
 			@RequestParam(value = "city", required = true) String city,
 			@RequestParam(value = "market", required = true) String market)
 			throws CityNotFoundException, MarketNotFoundException {
@@ -35,6 +39,7 @@ public class OfferSearchController {
 
 		List<Offer> offerList = offerSearchService.fetchOffers(cityObject,
 				marketObject);
-
+		
+		return offerList;
 	}
 }

@@ -71,6 +71,7 @@ public class OfferSearchService {
 		return marketObj;
 	}
 
+	@Transactional
 	public List<Offer> fetchOffers(City cityObject, Market marketObject) {
 
 		List<Offer> offerList = offerDao.queryForOffers(cityObject, marketObject);
