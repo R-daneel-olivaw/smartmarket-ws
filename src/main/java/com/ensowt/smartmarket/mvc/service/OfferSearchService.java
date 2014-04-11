@@ -2,6 +2,7 @@ package com.ensowt.smartmarket.mvc.service;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ensowt.smartmarket.gen.db.City;
 import com.ensowt.smartmarket.gen.db.Market;
 import com.ensowt.smartmarket.gen.db.Offer;
+import com.ensowt.smartmarket.jsonpojo.OfferJson;
 import com.ensowt.smartmarket.mvc.dao.CityTableDao;
 import com.ensowt.smartmarket.mvc.dao.MarketDao;
 import com.ensowt.smartmarket.mvc.dao.OfferDao;
@@ -72,10 +74,12 @@ public class OfferSearchService {
 	}
 
 	@Transactional
-	public List<Offer> fetchOffers(City cityObject, Market marketObject) {
+	public List<OfferJson> fetchOffers(City cityObject, Market marketObject) {
 
-		List<Offer> offerList = offerDao.queryForOffers(cityObject, marketObject);
+		List<Offer> offerList = offerDao.queryForOffers(cityObject,
+				marketObject);
+		List<OfferJson> jsonList = OfferJson.covertToJson(offerList);
 
-		return offerList;
+		return jsonList;
 	}
 }

@@ -3,6 +3,7 @@ package com.ensowt.smartmarket.mvc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Restrictions;
@@ -35,6 +36,7 @@ public class MarketDao {
 			return null;
 		}
 
+		Hibernate.initialize(list.get(0));
 		return list.get(0);
 	}
 }

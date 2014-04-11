@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ensowt.smartmarket.gen.db.City;
 import com.ensowt.smartmarket.gen.db.Market;
-import com.ensowt.smartmarket.gen.db.Offer;
+import com.ensowt.smartmarket.jsonpojo.OfferJson;
 import com.ensowt.smartmarket.mvc.service.OfferSearchService;
 import com.ensowt.smartmarket.util.excep.CityNotFoundException;
 import com.ensowt.smartmarket.util.excep.MarketNotFoundException;
@@ -26,9 +26,19 @@ public class OfferSearchController {
 	private static final Logger logger = Logger
 			.getLogger(OfferSearchController.class);
 
+	/**
+	 * http://localhost:8080/SmartMarketWS/offerSearch/getOffersByCityMarket?
+	 * city=noida&market=sector-18
+	 * 
+	 * @param city
+	 * @param market
+	 * @return
+	 * @throws CityNotFoundException
+	 * @throws MarketNotFoundException
+	 */
 	@RequestMapping(value = "/getOffersByCityMarket", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Offer> getOffers(
+	public List<OfferJson> getOffers(
 			@RequestParam(value = "city", required = true) String city,
 			@RequestParam(value = "market", required = true) String market)
 			throws CityNotFoundException, MarketNotFoundException {
@@ -37,9 +47,9 @@ public class OfferSearchController {
 		Market marketObject = offerSearchService
 				.fetchMarket(market, cityObject);
 
-		List<Offer> offerList = offerSearchService.fetchOffers(cityObject,
+		List<OfferJson> jsonList = offerSearchService.fetchOffers(cityObject,
 				marketObject);
-		
-		return offerList;
+
+		return jsonList;
 	}
 }

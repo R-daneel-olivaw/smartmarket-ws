@@ -3,6 +3,7 @@ package com.ensowt.smartmarket.mvc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Restrictions;
@@ -15,23 +16,27 @@ import com.ensowt.smartmarket.gen.db.Offer;
 
 @Repository
 public class OfferDao {
-	
+
 	private final Class<Offer> offerClass = Offer.class;
 	@Autowired
 	SessionFactory sessionFactory;
 
 	public List<Offer> queryForOffers(City cityObject, Market marketObject) {
-		
+
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(offerClass);
-		
-		criteria.createAlias("seller", "seller");
-		criteria.createAlias("seller.market", "market");		
-		criteria.add(Restrictions.eq("market", marketObject));
-		
+
+		criteria.createAlias("seller", "s");
+		criteria.add(Restrictions.eq("s.market", marketObject));
+
 		@SuppressWarnings("unchecked")
-		List<Offer> list = (List<Offer>)criteria.list();
-		
+		List<Offer> list = (List<Offer>) criteria.list();
+
+		for (Offer o : list) {
+			Hibernate.initialize(o);
+			Hibernate.initialize(o.getSeller().getSellerDetails());
+		}
+
 		return list;
 	}
 

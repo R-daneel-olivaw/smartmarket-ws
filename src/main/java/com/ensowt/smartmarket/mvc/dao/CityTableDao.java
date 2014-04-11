@@ -3,12 +3,11 @@ package com.ensowt.smartmarket.mvc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Repository;
 
 import com.ensowt.smartmarket.gen.db.City;
@@ -35,6 +34,7 @@ public class CityTableDao {
 			return null;
 		}
 
+		Hibernate.initialize(list.get(0));
 		return list.get(0);
 	}
 
