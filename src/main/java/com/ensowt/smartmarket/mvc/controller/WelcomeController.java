@@ -21,12 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("welcome")
 public class WelcomeController {
-	@RequestMapping("")
+	@RequestMapping("/searchOffer.smt")
 	public ModelAndView showWelcomePage(ModelAndView modelAndView) {
 
-		modelAndView.setViewName("welcome");
+		modelAndView.setViewName("searchOffer");
 
 		return modelAndView;
 	}

@@ -18,6 +18,8 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Database Configuration -->
 	<import resource="spring/database/DataSource.xml" />
