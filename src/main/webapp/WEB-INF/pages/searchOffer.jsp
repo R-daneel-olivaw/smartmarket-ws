@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -14,10 +15,15 @@
 <title>search offer</title>
 
 <!-- Bootstrap core CSS -->
-<link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+
+<%-- <c:url value="/resources/css/main.css" />" rel="stylesheet"> --%>
+
+<link href="<c:url value="/resources/css/bootstrap.min.css"/>"
+	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="./resources/css/narrowBootstrap.css" rel="stylesheet">
+<link href="<c:url value="/resources/css/narrowBootstrap.css"/>"
+	rel="stylesheet">
 
 <!-- Just for debugging purposes. Don't actually copy this line! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -42,8 +48,8 @@
 			<p>Let's go fishing</p>
 			<p>let us know where to look!</p>
 
-			<form:form method="GET" commandName="command"
-				class="form-horizontal" role="form" action="offerSearch/getOffersByCityMarket">
+			<form:form method="GET" commandName="command" class="form-horizontal"
+				role="form" action="offerSearch/getOffersByCityMarket">
 
 				<div class="form-group">
 					<label for="text" class="col-sm-3 control-label">City*</label>
@@ -88,13 +94,9 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="./resources/js/bootstrap.min.js"></script>
+	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 	<script type="application/javascript">
-		
-		
-		
-		
       function requestOffers()
       {
           
@@ -119,6 +121,9 @@
 //          alert( offer[1].offer );
       }
       
+	
+	
+	
 	
 	
 	
