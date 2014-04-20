@@ -49,7 +49,8 @@
 			<p>let us know where to look!</p>
 
 			<form:form method="GET" commandName="command" class="form-horizontal"
-				role="form" action="offerSearch/getOffersByCityMarket">
+				role="form">
+				<form:errors path="*" cssClass="errorblock" element="div" />
 
 				<div class="form-group">
 					<label for="text" class="col-sm-3 control-label">City*</label>
@@ -88,7 +89,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="offer" items="${searchResults}"
+					<c:forEach var="offer" items="${searchResults.offers}"
 						varStatus="varCounter">
 						<tr>
 							<td><c:out value="${varCounter.count}" /></td>
@@ -130,6 +131,7 @@
 		
 		
 		
+		
       function requestOffers()
       {
           
@@ -154,6 +156,7 @@
 //          alert( offer[1].offer );
       }
       
+	
 	
 	
 	

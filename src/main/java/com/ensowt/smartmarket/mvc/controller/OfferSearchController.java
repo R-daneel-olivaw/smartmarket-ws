@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.ensowt.smartmarket.gen.db.City;
 import com.ensowt.smartmarket.gen.db.Market;
 import com.ensowt.smartmarket.jsonpojo.OfferJson;
+import com.ensowt.smartmarket.jsonpojo.OfferSearchResponseJson;
 import com.ensowt.smartmarket.mvc.service.OfferSearchService;
 import com.ensowt.smartmarket.util.ds.OfferSearchCommand;
 import com.ensowt.smartmarket.util.excep.CityNotFoundException;
@@ -61,23 +63,42 @@ public class OfferSearchController {
 		return jsonList;
 	}
 
-	@RequestMapping(value = "/getOffersByCityMarket", method = RequestMethod.GET)
+	@RequestMapping(params = "_step=Search", method = RequestMethod.GET)
 	public String getOffers(
 			@ModelAttribute("command") OfferSearchCommand searchCommand,
-			Model model, final SessionStatus status)
-			throws CityNotFoundException, MarketNotFoundException {
+			Model model, final SessionStatus status, final Errors errors) {
 
 		String city = searchCommand.getCityName();
 		String market = searchCommand.getMarketName();
 
-		City cityObject = offerSearchService.fetchCity(city);
-		Market marketObject = offerSearchService
-				.fetchMarket(market, cityObject);
+		City cityObject;
+		OfferSearchResponseJson jsonResponseJson = new OfferSearchResponseJson();
+		try {
+			cityObject = offerSearchService.fetchCity(city);
 
-		List<OfferJson> jsonList = offerSearchService.fetchOffers(cityObject,
-				marketObject);
+			Market marketObject = offerSearchService.fetchMarket(market,
+					cityObject);
 
-		model.addAttribute("searchResults", jsonList);
+			List<OfferJson> jsonList = offerSearchService.fetchOffers(
+					cityObject, marketObject);
+
+			jsonResponseJson.setOffers(jsonList);
+		} catch (CityNotFoundException e) {
+			logger.error(e.getMessage(), e);
+			errors.rejectValue("cityName", "notfound.cityName",
+					"City with name " + searchCommand.getCityName()
+							+ " was not found.");
+		} catch (MarketNotFoundException e) {
+			logger.error(e.getMessage(), e);
+			errors.rejectValue(
+					"marketName",
+					"notfound.marketName",
+					"Market with name " + searchCommand.getMarketName()
+							+ "  was not found for city "
+							+ searchCommand.getCityName());
+		}
+
+		model.addAttribute("searchResults", jsonResponseJson);
 
 		return "searchOffer";
 	}
@@ -94,12 +115,12 @@ public class OfferSearchController {
 			@ModelAttribute("command") OfferSearchCommand candidate,
 			final SessionStatus status) {
 
-		if(candidate.getCityName()!=null || candidate.getMarketName()!=null)
-		{
+		if (candidate.getCityName() != null
+				|| candidate.getMarketName() != null) {
 			status.setComplete();
-			candidate = new OfferSearchCommand(); 
+			candidate = new OfferSearchCommand();
 		}
-		
+
 		model.addAttribute("command", candidate);
 
 		return "searchOffer";
