@@ -20,13 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
 public class WelcomeController {
-	@RequestMapping("/searchOffer.smt")
-	public ModelAndView showWelcomePage(ModelAndView modelAndView) {
 
-		modelAndView.setViewName("searchOffer");
-
-		return modelAndView;
-	}
 }
