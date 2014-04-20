@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.ensowt.smartmarket.gen.db.City;
 import com.ensowt.smartmarket.gen.db.Market;
@@ -63,7 +64,8 @@ public class OfferSearchController {
 	@RequestMapping(value = "/getOffersByCityMarket", method = RequestMethod.GET)
 	public String getOffers(
 			@ModelAttribute("command") OfferSearchCommand searchCommand,
-			Model model) throws CityNotFoundException, MarketNotFoundException {
+			Model model, final SessionStatus status)
+			throws CityNotFoundException, MarketNotFoundException {
 
 		String city = searchCommand.getCityName();
 		String market = searchCommand.getMarketName();
@@ -89,8 +91,15 @@ public class OfferSearchController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showWelcomePage(Model model,
-			@ModelAttribute("command") OfferSearchCommand candidate) {
+			@ModelAttribute("command") OfferSearchCommand candidate,
+			final SessionStatus status) {
 
+		if(candidate.getCityName()!=null || candidate.getMarketName()!=null)
+		{
+			status.setComplete();
+			candidate = new OfferSearchCommand(); 
+		}
+		
 		model.addAttribute("command", candidate);
 
 		return "searchOffer";
