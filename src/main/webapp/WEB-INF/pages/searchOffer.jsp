@@ -50,7 +50,7 @@
 
 			<form:form method="GET" commandName="command" class="form-horizontal"
 				role="form">
-				<form:errors path="*" cssClass="errorblock" element="div" />
+				<form:errors path="*" cssClass="alert alert-danger" element="div" />
 
 				<div class="form-group">
 					<label for="text" class="col-sm-3 control-label">City*</label>
@@ -78,28 +78,32 @@
 			</form:form>
 		</div>
 
-		<div class="table-responsive">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Offer Details</th>
-						<th>Seller Name</th>
-						<th>Seller Address</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="offer" items="${searchResults.offers}"
-						varStatus="varCounter">
-						<tr>
-							<td><c:out value="${varCounter.count}" /></td>
-							<td><c:out value="${offer.offer}" /></td>
-							<td><c:out value="${offer.seller.sellerName}" /></td>
-							<td><c:out value="${offer.seller.sellerAddress}" /></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Offer Details</th>
+								<th>Seller Name</th>
+								<th>Seller Address</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="offer" items="${searchResults.offers}"
+								varStatus="varCounter">
+								<tr>
+									<td><c:out value="${varCounter.count}" /></td>
+									<td><c:out value="${offer.offer}" /></td>
+									<td><c:out value="${offer.seller.sellerName}" /></td>
+									<td><c:out value="${offer.seller.sellerAddress}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 
 		<div class="row marketing">
@@ -122,6 +126,8 @@
 	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 	<script type="application/javascript">
+		
+		
 		
 		
 		
@@ -156,6 +162,8 @@
 //          alert( offer[1].offer );
       }
       
+	
+	
 	
 	
 	
