@@ -77,15 +77,29 @@
 			</form:form>
 		</div>
 
-		<table>
-			<c:forEach var="offer" items="${searchResults}"
-				varStatus="varCounter">
-				<tr>
-					<td><c:out value="${offer.offer}" /></td>
-					<td><c:out value="${offer.seller.sellerName}" /></td>
-				</tr>
-			</c:forEach>
-		</table>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Offer Details</th>
+						<th>Seller Name</th>
+						<th>Seller Address</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="offer" items="${searchResults}"
+						varStatus="varCounter">
+						<tr>
+							<td><c:out value="${varCounter.count}" /></td>
+							<td><c:out value="${offer.offer}" /></td>
+							<td><c:out value="${offer.seller.sellerName}" /></td>
+							<td><c:out value="${offer.seller.sellerAddress}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 
 		<div class="row marketing">
 			<div class="col-lg-6"></div>
@@ -107,6 +121,12 @@
 	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 	<script type="application/javascript">
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -134,6 +154,12 @@
 //          alert( offer[1].offer );
       }
       
+	
+	
+	
+	
+	
+	
 	
 	
 	

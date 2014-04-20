@@ -54,7 +54,7 @@ public class OfferJson {
 			SellerJson sellerJson = new SellerJson(
 					sellerDetails.getSellerName(), o.getSeller().getMarket()
 							.getCity().getCityName(), o.getSeller().getMarket()
-							.getMarketName());
+							.getMarketName(),sellerDetails.getSellerAddress());
 
 			OfferJson ojson = new OfferJson(o.getOfferName(), o.getOfferType(),
 					sellerJson);
