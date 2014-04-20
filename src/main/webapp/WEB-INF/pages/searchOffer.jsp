@@ -77,6 +77,16 @@
 			</form:form>
 		</div>
 
+		<table>
+			<c:forEach var="offer" items="${searchResults}"
+				varStatus="varCounter">
+				<tr>
+					<td><c:out value="${offer.offer}" /></td>
+					<td><c:out value="${offer.seller.sellerName}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+
 		<div class="row marketing">
 			<div class="col-lg-6"></div>
 		</div>
@@ -97,6 +107,9 @@
 	<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 
 	<script type="application/javascript">
+		
+		
+		
       function requestOffers()
       {
           
@@ -121,6 +134,9 @@
 //          alert( offer[1].offer );
       }
       
+	
+	
+	
 	
 	
 	
